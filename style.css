@@ -7,6 +7,10 @@
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: rgb(214, 222, 224);
+
+  --color-delete-button: #ce5246;
+  --color-add-button: #00c46a;
+  --color-edit-button: #ffb545;
 }
 
 * {
@@ -42,15 +46,15 @@ a:visited {
 
 /* SIDEBAR */
 .sidebar {
-  flex-basis: 50rem;
-  background-color: var(--color-dark--1);
-  padding: 3rem 5rem 4rem 5rem;
+  flex-basis: 45rem;
+  background-color: var(--color-light--2);
+  padding: 3rem 4rem 4rem 4rem;
   display: flex;
   flex-direction: column;
 }
 
 .logo {
-  height: 5.2rem;
+  height: 11rem;
   align-self: center;
   margin-bottom: 4rem;
 }
@@ -175,18 +179,18 @@ a:visited {
   margin-top: auto;
   font-size: 1.3rem;
   text-align: center;
-  color: var(--color-light--1);
+  color: var(--color-dark--2);
 }
 
-.twitter-link:link,
-.twitter-link:visited {
-  color: var(--color-light--1);
+.github-link:link,
+.github-link:visited {
+  color: var(--color-dark--2);
   transition: all 0.2s;
 }
 
-.twitter-link:hover,
-.twitter-link:active {
-  color: var(--color-light--2);
+.github-link:hover,
+.github-link:active {
+  color: var(--color-dark--1);
 }
 
 /* MAP */
@@ -217,4 +221,28 @@ a:visited {
 }
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
+}
+
+.delete-all {
+  background-color: var(--color-delete-button);
+  border-radius: 1.6rem;
+  border: 1px solid #b14545;
+  margin-bottom: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Verdana;
+  font-size: 1.5rem;
+  padding: 0.8rem 1.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-all:hover {
+  background-color: #8a352f;
+}
+.delete-all:active {
+  position: relative;
+  top: 1px;
 }

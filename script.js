@@ -68,6 +68,7 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const deleteAll = document.querySelector('.delete-all');
 
 class App {
   #map;
@@ -86,6 +87,7 @@ class App {
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
     containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+    deleteAll.addEventListener('click', this.reset.bind(this));
   }
 
   _getPosition() {
@@ -161,12 +163,11 @@ class App {
   }
 
   _newWorkout(e) {
-    e.preventDefault();
-
     const validInputs = (...inputs) =>
       inputs.every(inp => Number.isFinite(inp));
-
     const allPositive = (...inputs) => inputs.every(inp => inp > 0);
+
+    e.preventDefault();
 
     // Get data from form
     const type = inputType.value;
@@ -178,25 +179,31 @@ class App {
     // If workout running, create running object
     if (type === 'running') {
       const cadence = +inputCadence.value;
+
       // Check if data is valid
       if (
+        // !Number.isFinite(distance) ||
+        // !Number.isFinite(duration) ||
+        // !Number.isFinite(cadence)
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       )
-        return alert('Inputs have to be positive numbers');
-      workout = new Running([lat, lng], distance, duration);
+        return alert('Inputs have to be positive numbers!');
+
+      workout = new Running([lat, lng], distance, duration, cadence);
     }
 
     // If workout cycling, create cycling object
     if (type === 'cycling') {
       const elevation = +inputElevation.value;
-      // Check if data is valid
+
       if (
         !validInputs(distance, duration, elevation) ||
         !allPositive(distance, duration)
       )
-        return alert('Inputs have to be positive numbers');
-      workout = new Cycling([lat, lng], distance, elevation);
+        return alert('Inputs have to be positive numbers!');
+
+      workout = new Cycling([lat, lng], distance, duration, elevation);
     }
 
     // Add new object to workout array
@@ -204,10 +211,11 @@ class App {
 
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
+
     // Render workout on list
     this._renderWorkout(workout);
 
-    // Clear input fields
+    // Hide form + clear input fields
     this._hideForm();
 
     // Set local storage to all workouts
